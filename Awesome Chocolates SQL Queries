@@ -1,0 +1,66 @@
+-- 1. Retrieving Complete Sales Records
+ SELECT * FROM sales;
+
+-- 2. Selecting Key Sales Metrics
+ SELECT SaleDate, Amount, Customers FROM sales;
+ SELECT Amount, Customers, GeoID FROM sales;
+
+-- 3. Calculating Revenue per Box Sold
+ SELECT SaleDate, Amount, Boxes, Amount / Boxes AS 'Amount per box' FROM 
+sales;
+
+-- 4. Identifying High-Value Sales Transactions
+ SELECT * FROM sales WHERE Amount > 10000;
+
+-- 5. Ranking Sales Transactions by Value
+ SELECT * FROM sales
+ WHERE Amount > 10000
+ ORDER BY Amount DESC;
+
+-- 6. Filtering and Sorting Sales by Geographic Region
+ SELECT * FROM sales
+ WHERE GeoID = 'g1'
+ ORDER BY PID, Amount DESC;
+
+-- 7. Analyzing High-Value Sales Over Time
+ SELECT * FROM sales
+ WHERE Amount > 10000 AND SaleDate >= '2022-01-01';
+
+-- 8. Extracting and Sorting Sales Data for a Specific Year
+ SELECT SaleDate, Amount FROM sales
+ WHERE Amount > 10000 AND YEAR(SaleDate) = 2022
+ ORDER BY Amount DESC;
+
+-- 9. Filtering Sales Based on Box Quantity Range
+ SELECT * FROM sales
+ WHERE Boxes >= 1 AND Boxes <= 50;
+
+-- 10. Identifying Sales Trends by Day of the Week
+ SELECT SaleDate, Amount, Boxes, WEEKDAY(SaleDate) AS 'Day of week'
+ FROM sales
+ WHERE WEEKDAY(SaleDate) = 4;
+
+-- 11. Retrieving Complete People Data
+ SELECT * FROM people;
+
+-- 12. Filtering Employees by Team Membership
+ SELECT * FROM people
+ WHERE team IN ('Delish', 'Juices');
+
+-- 13. Searching Salespersons by Name Patterns
+ SELECT * FROM people WHERE salesperson LIKE 'B%';
+ SELECT * FROM people WHERE salesperson LIKE '%B%';
+
+-- 14. Classifying Sales Transactions by Revenue Range
+SELECT SaleDate, Amount,
+ CASE
+ WHEN Amount < 1000 THEN 'Under 1k'
+ WHEN Amount < 5000 THEN 'Under 5k'
+ WHEN Amount < 10000 THEN 'Under 10k'
+ ELSE '10k or more'
+ END AS 'Amount category'
+ FROM sales;
+
+-- 15. Grouping and Counting Employees by Team
+ SELECT team, COUNT(*) FROM people
+ GROUP BY team
